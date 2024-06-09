@@ -8,6 +8,7 @@ import { CambioClaveComponent } from './cambio-clave/cambio-clave.component';
 import { RecuperarClaveComponent } from './recuperar-clave/recuperar-clave.component';
 import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './usuario/editar-usuario/editar-usuario.component';
+import { CerrarSesionComponent } from './cerrar-sesion/cerrar-sesion.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { EditarUsuarioComponent } from './usuario/editar-usuario/editar-usuario.
     CambioClaveComponent,
     RecuperarClaveComponent,
     CrearUsuarioComponent,
-    EditarUsuarioComponent
+    EditarUsuarioComponent,
+    CerrarSesionComponent
   ],
   imports: [
     CommonModule,
