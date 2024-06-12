@@ -9,6 +9,7 @@ import { RecuperarClaveComponent } from './recuperar-clave/recuperar-clave.compo
 import { CrearUsuarioComponent } from './usuario/crear-usuario/crear-usuario.component';
 import { EditarUsuarioComponent } from './usuario/editar-usuario/editar-usuario.component';
 import { CerrarSesionComponent } from './cerrar-sesion/cerrar-sesion.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { CerrarSesionComponent } from './cerrar-sesion/cerrar-sesion.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     SeguridadRoutingModule
   ]
 })

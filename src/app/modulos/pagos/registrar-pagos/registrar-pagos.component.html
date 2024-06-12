@@ -1,1 +1,31 @@
-<p>registrar-pagos works!</p>
+<div class="overlay" *ngIf="isVisible" (click)="closeModal()"></div>
+<div class="modal" *ngIf="isVisible">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Pago de servicio</h2>
+      <button class="close-button" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit()">
+        <div>
+          <label for="factura">Factura a pagar</label>
+          <input id="factura" [(ngModel)]="pago.factura" name="factura" readonly>
+        </div>
+        <div>
+          <label for="total">Total a pagar</label>
+          <input id="total" [(ngModel)]="pago.total" name="total" readonly>
+        </div>
+        <div>
+          <label for="medio">Seleccione el medio de pago</label>
+          <select id="medio" [(ngModel)]="pago.medio" name="medio">
+            <option value="PSE">PSE</option>
+            <option value="Tarjeta de Crédito">Tarjeta de Crédito</option>
+            <option value="Tarjeta Débito">Tarjeta Débito</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-button">Completar pago</button>
+      </form>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,20 @@
+<div class="registrar-servicio">
+    <h2>Registrar Nuevo Servicio</h2>
+    <form (ngSubmit)="onSubmit()">
+      <label for="tipo">Seleccione el tipo de servicio</label>
+      <select id="tipo" [(ngModel)]="servicio.tipo" name="tipo" required>
+        <option value="Gas - Efigas">Gas - Efigas</option>
+        <option value="Agua - Aguas de Manizales">Agua - Aguas de Manizales</option>
+        <!-- Agrega más opciones según sea necesario -->
+      </select>
+      
+      <label for="nombre">Ingrese un nombre para el servicio</label>
+      <input type="text" id="nombre" [(ngModel)]="servicio.nombre" name="nombre" required>
+  
+      <label for="numero">Ingrese su número de suscriptor</label>
+      <input type="text" id="numero" [(ngModel)]="servicio.numero" name="numero" required>
+  
+      <button type="submit">Registrar Servicio</button>
+    </form>
+  </div>
+  

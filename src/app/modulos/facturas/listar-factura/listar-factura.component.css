@@ -1,0 +1,86 @@
+.facturas-container {
+    padding: 20px;
+  }
+  
+  .facturas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .facturas-header h1 {
+    margin: 0;
+  }
+  
+  .register-button {
+    background-color: #f2aa1f;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .facturas-list {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .factura-card {
+    background-color: #f8f2ec;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .factura-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .factura-info {
+    padding: 15px;
+  }
+  
+  .factura-info h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #114358;
+  }
+  
+  .factura-info p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .factura-info img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+  
+  .pay-button, .delete-button {
+    background-color: #f2aa1f;
+    border: none;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .delete-button {
+    background-color: red;
+  }
+  
+  .pay-button:hover, .delete-button:hover {
+    opacity: 0.8;
+  }
+  

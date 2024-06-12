@@ -1,1 +1,35 @@
-<p>listar-factura works!</p>
+<div class="facturas-container">
+  <div class="facturas-header">
+    <h1>Mis Facturas</h1>
+    <button class="register-button" routerLink="/registrar-servicio">+ Registrar servicio</button>
+  </div>
+  <div class="facturas-list">
+    <div class="factura-card" *ngFor="let factura of facturas">
+      <img src="path/to/agua_image.jpg" alt="Agua">
+      <div class="factura-info">
+        <h2>{{ factura.nombre }}</h2>
+        <p>Consumo: {{ factura.consumo }}</p>
+        <p>Total a pagar: {{ factura.total }}</p>
+        <!--<p>Fecha máxima de pago: {{ factura.fechaPago | date }}</p>-->
+        <p>Estado: {{ factura.estado }} <img src="path/to/warning_icon.png" alt="Warning"></p>
+        <!--<button class="pay-button" (click)="openModal(factura)">Pagar</button>-->
+        <button class="delete-button">X</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="isModalVisible" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Pagar Factura</h2>
+      <p>Factura: {{ selectedPago.factura }}</p>
+      <p>Total a pagar: {{ selectedPago.total }}</p>
+      <p>Medio de pago: {{ selectedPago.medio }}</p>
+      <!-- <button class="complete-payment-button" (click)="completePayment()">Completar pago</button> -->
+    </div>
+  </div>
+</div>
+
+
+  

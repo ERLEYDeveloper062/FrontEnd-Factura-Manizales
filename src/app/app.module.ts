@@ -9,6 +9,9 @@ import { RutaNoEncontradaComponent } from './publico/error/ruta-no-encontrada/ru
 import { ErrorServidorComponent } from './publico/error/error-servidor/error-servidor.component';
 import { AppRoutingModule } from './app-routing.module';
 import { InicioComponent } from './publico/pagina-maestra/inicio/inicio.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { PagosModule } from './modulos/pagos/pagos.module';
 
 @NgModule({
   declarations: [
@@ -18,11 +21,15 @@ import { InicioComponent } from './publico/pagina-maestra/inicio/inicio.componen
     MenuLateralComponent,
     RutaNoEncontradaComponent,
     ErrorServidorComponent,
-    InicioComponent
+    InicioComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    PagosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
