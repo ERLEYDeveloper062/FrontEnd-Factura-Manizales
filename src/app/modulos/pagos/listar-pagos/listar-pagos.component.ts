@@ -54,10 +54,35 @@ export class ListarPagosComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isAuthenticated) {
-      this.loadFacturas();
-      this.loadServicios();
-      this.loadAllPagos();
+      this.LoadPagos();
     }
+  }
+
+  LoadPagos(): void {
+    this.facturaService.getFacturas().subscribe(
+        (facturasResponse: any) => {
+          this.facturas = facturasResponse;
+          this.servicioService.getServicios().subscribe(
+            (serviciosResponse: any) => {
+              this.servicios = serviciosResponse;
+              this.pagoService.getPagos().subscribe(
+                (pagosResponse: any) => {
+                  this.pagos = pagosResponse;
+                },
+                error => {
+                  console.error('Error al obtener los pagos:', error);
+                }
+              );
+            },
+            error => {
+              console.error('Error al obtener los servicios:', error);
+            }
+          );
+        },
+        error => {
+          console.error('Error al obtener las facturas:', error);
+        }
+      );
   }
 
   checkAuthentication(): void {
@@ -69,7 +94,6 @@ export class ListarPagosComponent implements OnInit {
         (userResponse: any) => {
           this.usuario_id = userResponse.id;
           this.isAuthenticated = true;
-          this.loadAllPagos(); // Cargar pagos después de obtener la ID de usuario
         },
         error => {
           console.error('Error al obtener el ID de usuario:', error);
@@ -81,42 +105,41 @@ export class ListarPagosComponent implements OnInit {
     }
   }
 
-  loadAllPagos(): void {
-    this.pagoService.getPagos().subscribe((data: Pago[]) => {
-      this.pagos = data;
-      console.log('Pagos:', this.pagos);
-    });
-  }
-
-  loadPagos(): void {
-    this.pagoService.getPagosByUserId(this.usuario_id).subscribe((data: Pago[]) => {
-      this.pagos = data;
-      console.log('Pagos:', this.pagos);
-    });
-  }
-
-  loadFacturas(): void {
-    this.facturaService.getFacturas().subscribe((data: Factura[]) => {
-      this.facturas = data;
-      console.log('Facturas:', this.facturas);
-    });
-  }
-
-  loadServicios(): void {
-    this.servicioService.getServicios().subscribe((data: Servicio[]) => {
-      this.servicios = data;
-      console.log('Servicios:', this.servicios);
-    });
-  }
-
   getFacturaNombre(facturaId: number): string {
     const factura = this.facturas.find(f => f.id_factura === facturaId);
-    return factura ? factura.estado : 'Desconocido';
+    if (factura) {
+      const servicio = this.servicios.find(s => s.id === factura.servicio_id);
+      return servicio ? servicio.nombre : 'Desconocido';
+    }
+    return 'Desconocido';
+  }  
+
+  getCodigoSuscripcion(facturaId: number): string {
+    const factura = this.facturas.find(f => f.id_factura === facturaId);
+    if (factura) {
+      const servicio = this.servicios.find(s => s.id === factura.servicio_id);
+      return servicio ? servicio.codigo_suscripcion.toString() : 'Desconocido';
+    }
+    return 'Desconocido';
+  }
+
+  getTipoServicio(facturaId: number): string {
+    const factura = this.facturas.find(f => f.id_factura === facturaId);
+    if (factura) {
+      const servicio = this.servicios.find(s => s.id === factura.servicio_id);
+      return servicio ? servicio.nombre : 'Desconocido';
+    }
+    return 'Desconocido';
   }
 
   getFacturaConsumo(facturaId: number): string {
     const factura = this.facturas.find(f => f.id_factura === facturaId);
     return factura ? `${factura.consumo} ${factura.tipo === 'AGUAS DE MANIZALES' ? 'm³' : factura.tipo === 'CHEC' ? 'kWh' : ''}` : 'Desconocido';
+  }
+
+  getFacturaFechaPago(facturaId: number): any {
+    const factura = this.facturas.find(f => f.id_factura === facturaId);
+    return factura ? factura.fecha_pago : 'Desconocido';
   }
 
   filterPagos(event: Event): void {

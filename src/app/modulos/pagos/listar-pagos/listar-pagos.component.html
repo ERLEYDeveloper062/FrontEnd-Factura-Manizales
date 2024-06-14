@@ -7,17 +7,23 @@
     <thead>
       <tr>
         <th>Nombre factura</th>
+        <th>Cod. Suscripción</th>
+        <th>Tipo Servicio</th>
         <th>Fecha de pago</th>
         <th>Consumo</th>
         <th>Total Pagado</th>
+        <th>Estado</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let pago of pagos">
         <td>{{ getFacturaNombre(pago.factura_id) }}</td>
-   
+        <td>{{ getCodigoSuscripcion(pago.factura_id) }}</td>
+        <td>{{ getTipoServicio(pago.factura_id) }}</td>
+        <td>{{ getFacturaFechaPago(pago.factura_id) | date }}</td>
         <td>{{ getFacturaConsumo(pago.factura_id) }}</td>
-        <td>{{ pago.monto | currency:'COP' }}</td>
+        <td>{{ pago.monto | currency:'COP ' }}</td>
+        <td>PAGADO</td>
       </tr>
     </tbody>
   </table>
@@ -25,5 +31,4 @@
 <div *ngIf="!isAuthenticated">
   <p>No hay usuario autenticado. Por favor, inicie sesión para ver el historial de pagos.</p>
 </div>
-
 

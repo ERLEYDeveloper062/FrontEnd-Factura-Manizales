@@ -48,6 +48,6 @@ export class MenuLateralComponent implements OnInit {
   }
 
   onSubmit() {
-    window.location.href = 'http://127.0.0.1:8000';
+    window.location.href = 'https://facturas-cfm6.onrender.com';
   }
 }

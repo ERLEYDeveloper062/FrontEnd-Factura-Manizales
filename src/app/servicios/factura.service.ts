@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,12 +14,12 @@ export class FacturaService {
     return this.http.get(this.apiUrl);
   }
 
-  getFacturaByServicioId(servicio_id: number): Observable<any[]> {
+  getFacturaByServicioId(servicio_id: number): Observable<any> {
     return this.http.get<any[]>(`${this.apiUrl}servicio/${servicio_id}`);
-  }  
-
+  }
 
   registrarFactura(factura: any): Observable<any> {
     return this.http.post(this.apiUrl, factura);
   }
 }
+

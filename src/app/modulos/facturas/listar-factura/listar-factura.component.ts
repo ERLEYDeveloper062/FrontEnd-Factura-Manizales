@@ -68,8 +68,9 @@ export class ListarFacturaComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isAuthenticated) {
-      this.loadFacturas();
       this.loadServicios();
+      //this.loadFacturas1();
+      //this.loadServicios1()
     }
   }
 
@@ -84,7 +85,55 @@ export class ListarFacturaComponent implements OnInit {
     }
   }
 
+  loadServicios(): void {
+    if (this.isAuthenticated) {
+      const username = this.authService.getDecodedToken().username;
+      this.servicioService.getUserId(username).subscribe(
+        (userResponse: any) => {
+          const userId = userResponse.id;
+          this.servicioService.getServicioById(userId).subscribe((data: Servicio[]) => {
+            this.servicios = data;
+            console.log('Servicios:', this.servicios);
+            this.loadFacturas(); // Cargar facturas después de los servicios
+          });
+        },
+        error => {
+          console.error('Error al obtener el ID de usuario:', error);
+        }
+      );
+    }
+  }
+
   loadFacturas(): void {
+    if (this.isAuthenticated) {
+        this.facturas = [];
+        this.servicios.forEach(servicio => {
+            this.servicioService.getServiciosByCodigo(servicio.codigo_suscripcion).subscribe(
+                (servicioResponse: any) => {
+                    this.facturaService.getFacturaByServicioId(servicioResponse.id).subscribe(
+                        (facturaResponse: any) => {
+                            if (facturaResponse.factura) {
+                                this.facturas.push(facturaResponse.factura);
+                            } else {
+                                this.facturas.push(facturaResponse);
+                            }
+                            console.log('Facturas:', this.facturas);
+                        },
+                        error => {
+                            console.error('Error al obtener facturas por ID de servicio:', error);
+                        }
+                    );
+                },
+                error => {
+                    console.error('Error al obtener el ID de servicio:', error);
+                }
+            );
+        });
+    }
+}
+
+
+  loadFacturas1(): void {
     if (this.isAuthenticated) {
       this.facturaService.getFacturas().subscribe((data: Factura[]) => {
         this.facturas = data;
@@ -92,7 +141,7 @@ export class ListarFacturaComponent implements OnInit {
     }
   }
 
-  loadServicios(): void {
+  loadServicios1(): void {
     if (this.isAuthenticated) {
       this.servicioService.getServicios().subscribe((data: Servicio[]) => {
         this.servicios = data;
@@ -117,15 +166,15 @@ export class ListarFacturaComponent implements OnInit {
   openPaymentModal(factura: Factura): void {
     console.log('Factura seleccionada:', factura);
     const username = this.authService.getDecodedToken().username;
-  
+
     console.log('username:', username);
-  
+
     this.userService.getUserIdByUsername(username).subscribe(
       (userResponse: any) => {
         this.usuario_id = userResponse.id;
-  
+
         console.log('ID de usuario:', this.usuario_id);
-  
+
         this.selectedPago = {
           factura: factura.id_factura,
           total: Math.round(factura.costo),
@@ -137,7 +186,7 @@ export class ListarFacturaComponent implements OnInit {
           servicio_id: factura.servicio_id,
           user_id: this.usuario_id
         };
-  
+
         console.log('Pago seleccionado:', this.selectedPago);
         this.paymentForm.patchValue({
           factura_id: factura.id_factura,
@@ -153,7 +202,7 @@ export class ListarFacturaComponent implements OnInit {
       }
     );
   }
-  
+
 
 
   closePaymentModal(): void {
