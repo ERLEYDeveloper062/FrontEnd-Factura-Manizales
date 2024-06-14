@@ -25,8 +25,13 @@ const routes: Routes = [
       )
   },
   {
-    path: "listar-facturas",
-    component: ListarFacturaComponent
+    path: "facturas",
+    loadChildren: () =>
+      import("./modulos/facturas/facturas.module").then(
+        mod => mod.FacturasModule
+      )
+    //path: "listar-facturas",
+    //component: ListarFacturaComponent
   },
   {
     path: "",

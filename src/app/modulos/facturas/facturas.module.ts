@@ -6,7 +6,8 @@ import { RegistrarFacturaComponent } from './registrar-factura/registrar-factura
 import { EditarFacturaComponent } from './editar-factura/editar-factura.component';
 import { EliminarFacturaComponent } from './eliminar-factura/eliminar-factura.component';
 import { ListarFacturaComponent } from './listar-factura/listar-factura.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegistrarServicioComponent } from './registrar-servicio/registrar-servicio.component';
 
 
 @NgModule({
@@ -14,12 +15,14 @@ import { FormsModule } from '@angular/forms';
     RegistrarFacturaComponent,
     EditarFacturaComponent,
     EliminarFacturaComponent,
-    ListarFacturaComponent
+    ListarFacturaComponent,
+    RegistrarServicioComponent
   ],
   imports: [
     CommonModule,
     FacturasRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class FacturasModule { }

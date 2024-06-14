@@ -11,7 +11,11 @@ import { UserService } from 'src/app/servicios/user.service';
 export class MenuLateralComponent implements OnInit {
   user: any = null;
 
-  constructor(private router: Router , private userService: UserService) { }
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.loadUser();
@@ -24,16 +28,19 @@ export class MenuLateralComponent implements OnInit {
     const userStr = localStorage.getItem('user');
     if (userStr) {
       this.user = JSON.parse(userStr);
+    } else {
+      this.user = this.userService.getUser();
     }
   }
 
   logout(): void {
+    this.authService.logout();
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     this.userService.clearUser();
     this.userService.clearToken();
     this.user = null;
-    // Quitar el token de la URL y redirigir a la página de inicio
+    // Redirigir a la página de inicio
     this.router.navigate(['/inicio'], {
       queryParams: { token: null },
       queryParamsHandling: 'merge'
@@ -43,5 +50,4 @@ export class MenuLateralComponent implements OnInit {
   onSubmit() {
     window.location.href = 'http://127.0.0.1:8000';
   }
-
 }

@@ -1,35 +1,73 @@
-<div class="facturas-container">
+<div class="facturas-container" *ngIf="isAuthenticated">
   <div class="facturas-header">
     <h1>Mis Facturas</h1>
-    <button class="register-button" routerLink="/registrar-servicio">+ Registrar servicio</button>
+    <button class="register-button" (click)="openRegisterServiceModal()">+ Registrar servicio</button>
   </div>
   <div class="facturas-list">
     <div class="factura-card" *ngFor="let factura of facturas">
-      <img src="path/to/agua_image.jpg" alt="Agua">
+      <img [src]="getFacturaImage(factura.tipo)" [alt]="factura.tipo">
       <div class="factura-info">
-        <h2>{{ factura.nombre }}</h2>
+        <h2>{{ factura.id_factura}}</h2>
         <p>Consumo: {{ factura.consumo }}</p>
-        <p>Total a pagar: {{ factura.total }}</p>
-        <!--<p>Fecha máxima de pago: {{ factura.fechaPago | date }}</p>-->
-        <p>Estado: {{ factura.estado }} <img src="path/to/warning_icon.png" alt="Warning"></p>
-        <!--<button class="pay-button" (click)="openModal(factura)">Pagar</button>-->
+        <p>Total a pagar: {{ factura.costo | currency:'COP':true }}</p>
+        <p>Fecha máxima de pago: {{ factura.fecha_pago | date:'shortDate' }}</p>
+        <p>Estado: {{ factura.estado }}</p>
+        <button class="pay-button" (click)="openPaymentModal(factura)">Pagar</button>
         <button class="delete-button">X</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
-  <div *ngIf="isModalVisible" class="modal">
+  <!-- Modal de pago -->
+  <div *ngIf="isPaymentModalVisible" class="modal">
     <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
+      <span class="close" (click)="closePaymentModal()">&times;</span>
       <h2>Pagar Factura</h2>
-      <p>Factura: {{ selectedPago.factura }}</p>
-      <p>Total a pagar: {{ selectedPago.total }}</p>
-      <p>Medio de pago: {{ selectedPago.medio }}</p>
-      <!-- <button class="complete-payment-button" (click)="completePayment()">Completar pago</button> -->
+      <form [formGroup]="paymentForm" (ngSubmit)="onPaymentSubmit()">
+        <p>Factura: {{ selectedPago.factura }}</p>
+        <p>Total a pagar: {{ selectedPago.total | currency:'COP':true }}</p>
+        <div>
+          <label for="medio">Medio de pago</label>
+          <select id="medio" formControlName="medio">
+            <option *ngFor="let medio of mediosDePago" [value]="medio">{{ medio }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="monto">Monto</label>
+          <input id="monto" formControlName="monto" type="number" [min]="selectedPago.total" required>
+        </div>
+        <button type="submit" class="complete-payment-button">Completar pago</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de registro de servicio -->
+  <div *ngIf="isRegisterServiceModalVisible" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeRegisterServiceModal()">&times;</span>
+      <h2>Registrar Nuevo Servicio</h2>
+      <form [formGroup]="registerServiceForm" (ngSubmit)="onRegisterServiceSubmit()">
+        <div>
+          <label for="tipo">Seleccione el tipo de servicio</label>
+          <select id="tipo" formControlName="tipo">
+            <option *ngFor="let tipo of tipoServicios" [value]="tipo">{{ tipo }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="nombre">Ingrese un nombre para el servicio</label>
+          <input id="nombre" formControlName="nombre" type="text">
+        </div>
+        <div>
+          <label for="codigo_suscripcion">Ingrese su número de suscriptor</label>
+          <input id="codigo_suscripcion" formControlName="codigo_suscripcion" type="text">
+        </div>
+        <button type="submit">Registrar Servicio</button>
+      </form>
     </div>
   </div>
 </div>
+
+
 
 
   

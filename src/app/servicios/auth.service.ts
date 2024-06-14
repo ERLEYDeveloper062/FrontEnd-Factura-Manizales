@@ -10,30 +10,55 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  saveToken(token: string) {
+    localStorage.setItem('authToken', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  getDecodedToken(): any {
+    const token = this.getToken();
+    if (token) {
+      return this.decodeToken(token);
+    }
+    return null;
+  }
+
+  decodeToken(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    } catch (e) {
+      console.error('Failed to decode token', e);
+      return null;
+    }
+  }
+
   login(formData: any) {
     this.http.post(`${this.apiURL}/auth/login`, formData).subscribe((res: any) => {
       if (res.access_token) {
-        localStorage.setItem('token', res.access_token);
+        this.saveToken(res.access_token);
         this.router.navigate(['/inicio']);
       }
     });
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.router.navigate(['/seguridad/indentificar-usuario']);
+    localStorage.removeItem('authToken');
+    this.router.navigate(['/inicio']);
   }
 
   getUser() {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload;
+      return this.decodeToken(token);
     }
     return null;
   }
 
-  isLoggedIn() {
-    return !!localStorage.getItem('token');
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 }

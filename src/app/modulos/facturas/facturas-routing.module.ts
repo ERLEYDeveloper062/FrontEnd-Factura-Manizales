@@ -1,29 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrarPagosComponent } from '../pagos/registrar-pagos/registrar-pagos.component';
-import { RegistrarServicioComponent } from '../servicios-publicos/registrar-servicio/registrar-servicio.component';
+import { RegistrarServicioComponent } from '../facturas/registrar-servicio/registrar-servicio.component'
+import { ListarFacturaComponent } from './listar-factura/listar-factura.component';
 
 const routes: Routes = [
   {
-    path: "registrar-servicio",
-    component: RegistrarPagosComponent
+    path: "listar-facturas",
+    component: ListarFacturaComponent
   },
-  {
-    path: "",
-    redirectTo: "/registrar-pagos",
-    pathMatch: "full"
-  },
-
   {
     path: "registrar-servicio",
     component: RegistrarServicioComponent
   },
   {
-    path: "",
-    redirectTo: "/registrar-servicio",
-    pathMatch: "full"
+    path: "registrar-pagos",
+    component: RegistrarPagosComponent
   }
-
 ];
 
 @NgModule({

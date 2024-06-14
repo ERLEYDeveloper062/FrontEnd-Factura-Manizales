@@ -1,18 +1,18 @@
 <nav class="sidebar">
   <ul>
-    <li><a routerLink="/inicio"><img src="home_icon.png" alt="Inicio"> Inicio</a></li>
-    <li><a routerLink="/listar-facturas"><img src="facturas_icon.png" alt="Mis Facturas"> Mis Facturas</a></li>
-    <li><a routerLink="/listar-pagos"><img src="historial_icon.png" alt="Historial de pagos"> Historial de pagos</a></li>
-    <li><a routerLink="#"><img src="pqr_icon.png" alt="Reportes"> Mis reportes</a></li>
+    <li><a routerLink="/inicio"><i class="fas fa-home"></i> Inicio</a></li>
+    <li><a routerLink="/facturas/listar-facturas"><i class="fas fa-file-invoice-dollar"></i> Mis Facturas</a></li>
+    <li><a routerLink="/listar-pagos"><i class="fas fa-history"></i> Historial de pagos</a></li>
+    <li><a routerLink="#"><i class="fas fa-question-circle"></i> Mis PQRs</a></li>
   </ul>
   <div class="user-info" *ngIf="user; else loginTemplate">
-    <img src="user_icon.png" alt="User">
+    <i class="fas fa-user"></i>
     <span>{{ user.name }}</span>
-    <a (click)="logout()" class="logout">Desconectarse</a>
+    <a (click)="logout()" class="logout">Desconectar</a>
   </div>
   <ng-template #loginTemplate>
     <div class="user-info">
-      <img src="user_icon.png" alt="User">
+      <i class="fas fa-user"></i>
       <span>No hay usuario</span>
       <div class="login-container">
         <form (ngSubmit)="onSubmit()">

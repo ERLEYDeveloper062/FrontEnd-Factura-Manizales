@@ -1,27 +1,29 @@
-<div class="pagos-container">
-    <div class="pagos-header">
-      <h1>Historial de pagos</h1>
-      <button class="filter-button">
-        <img src="path/to/filter_icon.png" alt="Filtrar">
-      </button>
-    </div>
-    <table class="pagos-table">
-      <thead>
-        <tr>
-          <th>Nombre factura</th>
-          <th>Fecha de pago</th>
-          <th>Consumo</th>
-          <th>Total Pagado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let pago of pagos">
-          <td>{{ pago.nombre }}</td>
-          <td>{{ pago.fechaPago | date }}</td>
-          <td>{{ pago.consumo }}</td>
-          <td>{{ pago.totalPagado | currency }}</td>
-        </tr>
-      </tbody>
-    </table>
+<div class="pagos-container" *ngIf="isAuthenticated">
+  <h1>Historial de pagos</h1>
+  <div class="filter-container">
+    <input type="text" placeholder="Filtrar por nombre" (input)="filterPagos($event)">
   </div>
-  
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre factura</th>
+        <th>Fecha de pago</th>
+        <th>Consumo</th>
+        <th>Total Pagado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pago of pagos">
+        <td>{{ getFacturaNombre(pago.factura_id) }}</td>
+   
+        <td>{{ getFacturaConsumo(pago.factura_id) }}</td>
+        <td>{{ pago.monto | currency:'COP' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="!isAuthenticated">
+  <p>No hay usuario autenticado. Por favor, inicie sesión para ver el historial de pagos.</p>
+</div>
+
+

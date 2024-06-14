@@ -1,0 +1,26 @@
+<div class="register-service-container">
+  <h2>Registrar Nuevo Servicio</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="tipo">Seleccione el tipo de servicio</label>
+      <select id="tipo" formControlName="tipo">
+        <option value="AGUAS_DE_MANIZALES">Aguas de Manizales</option>
+        <option value="EFIGAS">Efigas</option>
+        <option value="CHEC">CHEC</option>
+      </select>
+    </div>
+    <div>
+      <label for="nombre">Ingrese un nombre para el servicio</label>
+      <input id="nombre" formControlName="nombre" type="text">
+    </div>
+    <div>
+      <label for="usuario_id">Ingrese su número de suscriptor</label>
+      <input id="usuario_id" formControlName="usuario_id" type="text">
+    </div>
+    <button type="submit">Registrar Servicio</button>
+  </form>
+</div>
+
+
+
+  
